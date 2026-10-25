@@ -1,0 +1,11 @@
+{
+    "headers": [
+        {
+            "source": "/vkvideo.js",
+            "headers": [{"key": "Access-Control-Allow-Origin", "value": "*"}]
+        }
+    ],
+    "redirects": [
+        {"source": "/", "destination": "https://github.com/ervnkv/lampa-vkvideo", "permanent": false}
+    ]
+}

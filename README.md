@@ -13,25 +13,25 @@
 В Lampa: «Настройки» → «Расширения» → «Добавить плагин», адрес:
 
 ```
-https://ervnkv.github.io/lampa-vkvideo/vkvideo.js
+https://lampa-vkvideo.vercel.app/vkvideo.js
 ```
 
-Затем перезапустите Lampa.
+Lampa подключает плагин сразу. Если пункт «VK Видео» не появился в меню, перезапустите Lampa.
 
 Если Lampa раздаётся со своим Content-Security-Policy, разрешите:
 
-- `script-src`: `https://ervnkv.github.io https://api.vkvideo.ru`
-- `connect-src`: домен прокси из `PROXY_URL` в `vkvideo.js`
+- `script-src`: `https://lampa-vkvideo.vercel.app https://api.vkvideo.ru`
+- `connect-src`: `https://lampa-vkvideo.vercel.app`
 - `img-src`: `https://*.vkuserphoto.ru https://*.userapi.com https://iv.okcdn.ru`
 - `frame-src`: `https://vkvideo.ru`
 
 ## Как устроено
 
 - Каталог, видео и комментарии браузер берёт напрямую у `api.vkvideo.ru` через JSONP.
-- Анонимный токен VK браузеру с чужого домена не отдаёт, поэтому его выдаёт маленький прокси из папки `proxy/` (nginx, один путь `/token`). Токен живёт сутки и кэшируется.
+- Анонимный токен VK браузеру с чужого домена не отдаёт, поэтому его выдаёт функция [`api/token.js`](api/token.js) на Vercel. Она запрашивает у VK фиксированный адрес и передаёт браузер, язык, адрес Lampa и IP клиента, без кук. У каждого клиента свой токен, он живёт сутки и хранится в Lampa.
 - Видео играет официальный эмбед `vkvideo.ru/video_ext.php`.
 
-Свой прокси: задеплойте `proxy/` как Docker-приложение (порт 80), например в Coolify, и укажите его адрес в `PROXY_URL` в своей копии `vkvideo.js`.
+Своя копия: форкните репозиторий, импортируйте его в Vercel без настроек сборки и поменяйте `TOKEN_URL` в `vkvideo.js` на свой домен.
 
 ## Ограничения
 

@@ -5,8 +5,8 @@
 
     window.vkvideo_plugin = true;
 
-    // Адрес прокси из папки proxy/. Заменить после деплоя в Coolify
-    var PROXY_URL = 'https://PROXY_DOMAIN';
+    // Функция api/token.js, задеплоенная на Vercel вместе с этим файлом
+    var TOKEN_URL = 'https://lampa-vkvideo.vercel.app/api/token';
     var CLIENT_ID = '52461373';
     var API_VERSION = '5.282';
     var API_URL = 'https://api.vkvideo.ru/method/';
@@ -217,7 +217,7 @@
             });
         }
 
-        xhr.open('GET', PROXY_URL + '/token');
+        xhr.open('GET', TOKEN_URL);
         xhr.timeout = TIMEOUT;
         xhr.onload = function () {
             var data = null;
