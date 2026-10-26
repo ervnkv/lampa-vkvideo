@@ -3,6 +3,10 @@
         {
             "source": "/vkvideo.js",
             "headers": [{"key": "Access-Control-Allow-Origin", "value": "*"}]
+        },
+        {
+            "source": "/vkvideo18.js",
+            "headers": [{"key": "Access-Control-Allow-Origin", "value": "*"}]
         }
     ],
     "redirects": [
