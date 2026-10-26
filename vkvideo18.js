@@ -110,7 +110,8 @@
             img: item.imageUrl || '',
             author: item.author || '',
             description: item.description || '',
-            player: item.playback.url,
+            // Эмбед VK лежит в адресе обёртки закодированным. Помечаем его как встроенный в Lampa
+            player: item.playback.url.replace(/partner_name%3D\w+/, 'partner_name%3Dlampa'),
             params: {module: card_modules}
         };
     }
@@ -340,7 +341,8 @@
         this.frame.setAttribute('allow', 'autoplay; fullscreen; encrypted-media; picture-in-picture; screen-wake-lock');
         this.body.querySelector('.vk18-watch__player').appendChild(this.frame);
 
-        // Обёртка пересылает события плеера VK с префиксом sandbox: и дважды шлёт inited. Запускаем один раз
+        // Обёртка пересылает события плеера VK с префиксом sandbox:. Свой inited она шлёт без state и иногда раньше,
+        // чем готов плеер VK, тогда play теряется. Запускаем один раз по inited от VK
         this.onMessage = function (e) {
             if (e.origin !== PLAYER_ORIGIN || !self.frame || e.source !== self.frame.contentWindow) return;
 
@@ -359,7 +361,7 @@
 
             if (data.state) self.state = data.state;
 
-            if (data.event === 'sandbox:inited' && !self.autoplayed) {
+            if (data.event === 'sandbox:inited' && data.state && !self.autoplayed) {
                 self.autoplayed = true;
                 self.command('play');
             }

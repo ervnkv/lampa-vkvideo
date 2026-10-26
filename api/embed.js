@@ -26,7 +26,8 @@ async function check(video) {
     if (known && Date.now() - known.at < CACHE_TIME) return {key, blocked: known.blocked};
 
     try {
-        const vk = await fetch(`${PLAYER_URL}?oid=${oid}&id=${id}&hash=${hash}`, {headers: HEADERS, redirect: 'manual', signal: AbortSignal.timeout(TIMEOUT)});
+        // Тот же адрес, что открывает плагин
+        const vk = await fetch(`${PLAYER_URL}?oid=${oid}&id=${id}&hash=${hash}&partner_name=lampa`, {headers: HEADERS, redirect: 'manual', signal: AbortSignal.timeout(TIMEOUT)});
         const page = await vk.text();
         // Без обоих признаков пришла антибот-страница или ошибка: ответа нет, ролик не прячем
         const blocked = page.includes('embedErrorCallback') ? true : page.includes('"is_embed":true') ? false : null;

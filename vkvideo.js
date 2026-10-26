@@ -13,6 +13,7 @@
     var API_URL = 'https://api.vkvideo.ru/method/';
     var CATALOG_URL = 'https://vkvideo.ru/';
     var PLAYER_ORIGIN = 'https://vkvideo.ru';
+    var EMBED_PARAMS = 'partner_name=lampa&js_api=1';
     var MENU_TITLE = 'VK Видео';
     var TOKEN_KEY = 'vkvideo_token';
     // Токен живёт сутки. Когда ему больше часа, продлеваем
@@ -880,7 +881,7 @@
 
         if (video.player) {
             this.frame = document.createElement('iframe');
-            this.frame.src = video.player + (video.player.indexOf('?') < 0 ? '?' : '&') + 'js_api=1';
+            this.frame.src = video.player + (video.player.indexOf('?') < 0 ? '?' : '&') + EMBED_PARAMS;
             this.frame.setAttribute('allow', 'autoplay; fullscreen; encrypted-media; picture-in-picture; screen-wake-lock');
             this.frame.setAttribute('allowfullscreen', '');
             this.body.querySelector('.vkvideo-watch__player').appendChild(this.frame);
